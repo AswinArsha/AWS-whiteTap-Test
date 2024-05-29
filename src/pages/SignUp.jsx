@@ -1,7 +1,6 @@
-// SignUp.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import supabase, { supabaseUrl } from "../supabase";
+import supabase from "../supabase";
 import Header from "../partials/Header";
 
 function SignUp() {
@@ -26,9 +25,6 @@ function SignUp() {
     drive_link: "",
     is_verified: false, // User is pending admin approval upon sign-up
   });
-
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [backgroundFile, setBackgroundFile] = useState(null);
 
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
   const [redirectDelay, setRedirectDelay] = useState(1); // Countdown for redirect
@@ -56,6 +52,7 @@ function SignUp() {
       [name]: value,
     }));
   };
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -69,7 +66,7 @@ function SignUp() {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const handleBackgroundChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -86,10 +83,12 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const { error } = await supabase.from("social_media_data").insert([formData]);
-  
+      const { error } = await supabase
+        .from("social_media_data")
+        .insert([formData]);
+
       if (error) {
         console.error("Error inserting data into Supabase:", error.message);
       } else {
@@ -100,6 +99,7 @@ function SignUp() {
       console.error("Error with Supabase:", err);
     }
   };
+
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <Header />
@@ -109,7 +109,9 @@ function SignUp() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="pt-32 pb-12 md:pt-40 md:pb-20">
               <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1">Unlock the Power of NFC Business Cards</h1>
+                <h1 className="h1 text-4xl font-bold text-gray-800">
+                  Unlock the Power of NFC Business Cards
+                </h1>
               </div>
 
               <div className="max-w-lg mx-auto">
@@ -191,11 +193,12 @@ function SignUp() {
                       />
                     </div>
                   </div>
+
                   {/* Contact Information */}
                   <div className="flex flex-wrap -mx-3 mb-4">
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="phone"
                       >
                         Phone
@@ -204,15 +207,15 @@ function SignUp() {
                         id="phone"
                         name="phone"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Phone number"
                         value={formData.phone}
                         onChange={handleChange}
                       />
                     </div>
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="website"
                       >
                         Website
@@ -221,15 +224,15 @@ function SignUp() {
                         id="website"
                         name="website"
                         type="text"
-                        class="form-input w-full text-gray-800"
-                        placeholder="Enter you website"
+                        className="form-input w-full text-gray-800"
+                        placeholder="Enter your website"
                         value={formData.website}
                         onChange={handleChange}
                       />
                     </div>
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="whatsapp"
                       >
                         WhatsApp
@@ -238,7 +241,7 @@ function SignUp() {
                         id="whatsapp"
                         name="whatsapp"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="WhatsApp number"
                         value={formData.whatsapp}
                         onChange={handleChange}
@@ -248,9 +251,9 @@ function SignUp() {
 
                   {/* Social Media */}
                   <div className="flex flex-wrap -mx-3 mb-4">
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="facebook"
                       >
                         Facebook
@@ -259,15 +262,15 @@ function SignUp() {
                         id="facebook"
                         name="facebook"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Facebook profile"
                         value={formData.facebook}
                         onChange={handleChange}
                       />
                     </div>
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="instagram"
                       >
                         Instagram
@@ -276,7 +279,7 @@ function SignUp() {
                         id="instagram"
                         name="instagram"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Instagram handle"
                         value={formData.instagram}
                         onChange={handleChange}
@@ -285,9 +288,9 @@ function SignUp() {
                   </div>
 
                   <div className="flex flex-wrap -mx-3 mb-4">
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="youtube"
                       >
                         YouTube
@@ -296,15 +299,15 @@ function SignUp() {
                         id="youtube"
                         name="youtube"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="YouTube channel"
                         value={formData.youtube}
                         onChange={handleChange}
                       />
                     </div>
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="linkedin"
                       >
                         LinkedIn
@@ -313,7 +316,7 @@ function SignUp() {
                         id="linkedin"
                         name="linkedin"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="LinkedIn profile"
                         value={formData.linkedin}
                         onChange={handleChange}
@@ -322,10 +325,10 @@ function SignUp() {
                   </div>
 
                   {/* Additional Features */}
-                  <div class="flex flex-wrap -mx-3 mb-4">
-                    <div class="w-full sm:w-1/2 px-3">
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="google_reviews"
                       >
                         Google Reviews
@@ -334,15 +337,15 @@ function SignUp() {
                         id="google_reviews"
                         name="google_reviews"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Google reviews link"
                         value={formData.google_reviews}
                         onChange={handleChange}
                       />
                     </div>
-                    <div class="w-full sm:w-1/2 px-3">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="paytm"
                       >
                         Paytm
@@ -351,7 +354,7 @@ function SignUp() {
                         id="paytm"
                         name="paytm"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Paytm link"
                         value={formData.paytm}
                         onChange={handleChange}
@@ -360,10 +363,10 @@ function SignUp() {
                   </div>
 
                   {/* Maps and Design-Related Fields */}
-                  <div class="flex flex-wrap -mx-3 mb-4">
-                    <div class="w-full sm:w-1/2 px-3">
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full sm:w-1/2 px-3">
                       <label
-                        class="block text-gray-800 text-sm font-medium mb-1"
+                        className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="maps"
                       >
                         Maps
@@ -372,7 +375,7 @@ function SignUp() {
                         id="maps"
                         name="maps"
                         type="text"
-                        class="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800"
                         placeholder="Maps link"
                         value={formData.maps}
                         onChange={handleChange}
@@ -381,23 +384,23 @@ function SignUp() {
                     <div className="w-full sm:w-1/2 px-3">
                       <label
                         className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="drive_link" // No leading space in 'drive_link'
+                        htmlFor="drive_link"
                       >
                         Drive Link
                       </label>
                       <input
-                        id="drive_link" // Corrected
-                        name="drive_link" // Corrected
+                        id="drive_link"
+                        name="drive_link"
                         type="text"
                         className="form-input w-full text-gray-800"
-                        placeholder="Enter your Drive link" // Improved placeholder
-                        value={formData.drive_link} // Corrected variable reference
+                        placeholder="Enter your Drive link"
+                        value={formData.drive_link}
                         onChange={handleChange}
                       />
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap -mx-3 mb-4">
+                  <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full sm:w-1/2 px-3">
                       <label
                         className="block text-gray-800 text-sm font-medium mb-1"
@@ -414,14 +417,13 @@ function SignUp() {
                         onChange={handleAvatarChange}
                       />
                     </div>
-             
                   </div>
 
                   {/* Submit Button */}
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                       <button
-                        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full py-3 rounded-lg"
                         type="submit"
                       >
                         Sign up
@@ -460,9 +462,9 @@ function SignUp() {
         {isSuccessPopupOpen && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity flex justify-center items-center z-50">
             <div className="bg-white rounded-lg p-6 shadow-lg text-center">
-              <div className="mb-4 inline-flex justify-center items-center w-16 h-16 rounded-full border-4 border-blue-50 bg-blue-100 text-blue-500">
+              <div className="mb-4 inline-flex justify-center items-center w-16 h-16 rounded-full bg-blue-100 text-blue-500">
                 <svg
-                  className="w-6 h-6 animate-spin"
+                  className="w-6 h-6"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                 >
